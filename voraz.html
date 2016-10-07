@@ -1,0 +1,154 @@
+<html>
+    <head>
+        <title>Dar cambio</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <script>
+            var mat=null;
+             var m ;
+          var N;
+          var a;
+          var res=null;
+          var v;
+    function armarmatriz(){
+				m =document.getElementById("N").value;
+                                 var t= document.getElementById("tablaA");
+								 
+                                for(i=0;i<2;i++){
+                                       var f=t.insertRow(-1);
+                                     
+                                        for(j=0;j<m;j++){
+                                              var nid= ""+i+j;
+                                                 var z=f.insertCell(-1);
+                                      
+                                                var CELDA="<input type=\"text\"";
+                                                CELDA=CELDA+"id=\""+nid+"\"";
+                                                CELDA=CELDA+"size=\"3\">";
+                                                z.innerHTML=CELDA;    
+														}  
+												}
+								}   
+           function limpiarMatriz(){
+		var t= document.getElementById("tablaA");
+		for(i=t.rows.length-1; i>=0; i--){
+		t.deleteRow(i);
+		}
+		}
+                function capturarmatriz(){  
+                                mat= new Array(m);
+                                for(i=0;i<2;i++){
+                                    mat[i]= new Array(m);
+                                    for(j=0;j<m;j++){
+                                       var temp=document.getElementById(""+i+j).value;
+                                       
+                                        mat[i][j]=Number(temp);
+
+													}
+												}
+										}
+   function vueltas(){
+       v =document.getElementById("V").value;
+       res = new Array(m);
+     
+       for(i=0;i<m;i++){
+            res[i] =0;
+           
+           if(mat[0][i]<=v){
+              
+                var f = mat[1][i];
+               for(j=0;j<f ;j++){
+                   if(mat[1][i]>0 ){
+                      if(mat[0][i]<=v){
+                       v=v-mat[0][i];
+                       mat[1][i]-=1;
+                       res[i] =res[i] + 1; 
+                    
+                   }
+               }
+                   
+               }
+               
+              
+           }
+           if(i==m-1 && v >0){
+               alert("No se puede dar vueltas completas");
+           }
+           
+       }
+   }
+  
+         
+           function obtenerCoor(w) {              
+            }
+
+            function graficar(){
+            	var canvas = document.getElementById("canvasGrafica");
+            	var lapiz = canvas.getContext("2d");
+				
+            	lapiz.fillStyle = "#FF0000";
+            	lapiz.fillStyle = "#FFF";
+         
+				 t=100;
+				for(i=1;i<=m;i++){
+					
+					/*texto=a[i-1];
+					lapiz.beginPath()
+					lapiz.strokeStyle="red"; //color externo
+					lapiz.fillStyle="red"; //color de relleno
+					lapiz.font="bold 15px arial"; //estilo de texto
+					lapiz.strokeText(texto,t.value,50); //texto con los dos métodos
+					lapiz.fillText(texto,100,50);*/
+				
+					lapiz.beginPath() //iniciar ruta
+					
+					lapiz.strokeStyle="blue"; //color externo
+					lapiz.fillStyle="brown"; //color de relleno
+                
+					lapiz.arc(i*110,50,50,0,2*Math.PI,false); //circulo
+					lapiz.fill();
+					
+					lapiz.fillStyle="white"; //color de relleno
+					texto="$"+ mat[0][i-1];
+                                     
+					lapiz.font="bold 15px arial";
+					lapiz.strokeText(texto,i*110,50); //texto con los dos métodos
+					lapiz.fillText(texto,i*110,50);
+					
+					lapiz.fillStyle="black"; //color de relleno
+					texto="#: "+ res[i-1];
+                                      
+					lapiz.font="bold 15px arial";
+					lapiz.strokeText(texto,i*110,120); //texto con los dos métodos
+					lapiz.fillText(texto,i*110,120);
+					t+=100;
+				}
+               
+            }
+
+
+        </script>
+    </head>
+
+    <body>
+    Dar Cambio
+      <br></br>
+	  Ingrese la cantidad de dinero
+		<input id="V" type="text">
+       
+        <div id="c"></div>
+        <div id="F"></div>
+		
+       numero de Monedas  <input id="N" type="text"><div> </div>
+	  
+       <input type="button" value="Ingresar" onclick="limpiarMatriz();armarmatriz();">
+		 <input type="button" value="Calcular" onclick="capturarmatriz();vueltas();graficar(); ">
+       <table id="tablaA">
+</table><br><br><br><br>
+
+		<div> </div>
+		
+      <br></br>
+        <canvas id="canvasGrafica" width="1200" height="1300"
+        </canvas>
+    </body>
+
+</html>
